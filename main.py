@@ -29,18 +29,6 @@ diretorio_destino = "logs_vpl"
 with zipfile.ZipFile(caminho_zip, "r") as zip_ref:
     zip_ref.extractall(diretorio_destino)
 
-# Define o caminho para a pasta "__MACOSX"
-macosx_path = os.path.join(diretorio_destino, "__MACOSX")
-
-# Verifica se a pasta "__MACOSX" existe e tenta removê-la
-if os.path.exists(macosx_path):
-    try:
-        shutil.rmtree(macosx_path)  # Remove a pasta e seu conteúdo
-    except OSError as e:
-        print(f"Could not remove: {e}")
-else:
-    print('Folder "__MACOSX" not found.')
-
 # Crie uma lista para armazenar todos os caminhos dos arquivos CSV
 arquivos_csv = []
 
@@ -239,8 +227,7 @@ for nome_arquivo in os.listdir(diretorio_turmas): # para cada turma
                             if len(linhas_filtradas):
                                 filtro = linhas_filtradas[linhas_filtradas['endereço IP'].str.contains(lin[2])]
                                 if len(filtro): # verifica IP do lab
-                                    print(linha[1])
-                                    print(f"{dia_aula} - {dia_aula_fim} - {lin[2]} - {len(filtro)}")
+                                    print(f"{dia_aula} - {dia_aula_fim} {lin[2]} {len(filtro):3d} ações {dia} {linha[1]}")
                                     presente = True 
                             if presente:
                                 # Decrementar a coluna "Faltas" em 2 para o aluno presente
