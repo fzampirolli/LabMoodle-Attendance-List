@@ -13,6 +13,7 @@ import os
 import pandas as pd
 import shutil
 import csv
+import time
 from datetime import datetime, timedelta
 
 ########################################################################
@@ -66,7 +67,7 @@ print(df_logs.shape)
 ########################################################################
 # Gera dias de aulas com IPs dos labs
 ########################################################################
-diretorio_dias = 'dias'
+diretorio_dias = 'turmas_dias'
 
 if not os.path.exists(diretorio_dias):
     os.makedirs(diretorio_dias)
@@ -77,7 +78,7 @@ def geraDiaHoraAulas(
     horas=["10:00", "08:00"],
     duracao=["2:00", "2:00"],
     IPs=["177.181.6", "177.181.7"],
-    arquivo="dias.csv",):
+    arquivo="turmas_dias.csv",):
 
     # Definir as datas de início (primeira segunda-feira de maio) e fim (última quarta-feira de agosto)
     aux = periodo[0].split("/")
@@ -200,6 +201,8 @@ for nome_arquivo in os.listdir(diretorio_dias):
     if nome_arquivo.startswith("dias_") and nome_arquivo.endswith(".csv"):
         caminho_dias = os.path.join(diretorio_dias, nome_arquivo)
         lista_dias.append(nome_arquivo[5:8])
+print(lista_dias)
+time.sleep(5)
 
 for nome_arquivo in os.listdir(diretorio_turmas): # para cada turma
     if nome_arquivo.startswith("faltas_") and nome_arquivo.endswith(".csv"):
@@ -238,5 +241,5 @@ for nome_arquivo in os.listdir(diretorio_turmas): # para cada turma
 
 '''
 limpar
-rm -rf *.csv turmas_sigaa dias
+rm -rf *.csv turmas_sigaa turmas_dias
 '''
