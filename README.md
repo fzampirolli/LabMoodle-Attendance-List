@@ -52,5 +52,7 @@ Foi incluído o número de faltas, conforme condições definidas em `dados.py`,
 
 ```
  "somente_F": True, # reprovação por falta somente para quem tirou F e tem mais que limite_faltas
-    "limite_faltas": 10,# math.ceil(0.25 * 48),
+"limite_faltas": 10,# math.ceil(0.25 * 48),
 ```
+
+Se `"somente_F": False`, reprova todos com mais que `limite_faltas`, atribuindo o conceito "O".
