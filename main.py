@@ -100,7 +100,7 @@ for t in dados["turmas"]:
 
 # Extrai os arquivos do ZIP para o diretório de destino
 with zipfile.ZipFile(dados["logs_vpl_zip"], "r") as zip_ref:
-    zip_ref.extractall(dados["logs_vpl_zip"][:-4])
+    zip_ref.extractall("./")
 
 # Crie uma lista para armazenar todos os caminhos dos arquivos CSV
 arquivos_csv = []
@@ -127,7 +127,7 @@ df_combinado["Hora"] = pd.to_datetime(
 )
 
 # Remover uma pasta não vazia
-shutil.rmtree(dados["logs_vpl_zip"][:-4])
+#shutil.rmtree(dados["logs_vpl_zip"][:-4])
 
 df_combinado.to_csv(dados["logs_vpl_zip"][:-4]+"_combinado.csv", index=False)
 
@@ -240,5 +240,5 @@ for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]): # para cada turm
 
 '''
 limpar
-rm -rf *.csv *.json turmas_sigaa_PI turmas_dias_PI
+rm -rf *.csv *.json turmas_sigaa_PI turmas_dias_PI logs_vpl_PI
 '''

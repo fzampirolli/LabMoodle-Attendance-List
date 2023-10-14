@@ -1,0 +1,56 @@
+{
+    "nome_a_remover": "Francisco de Assis Zampirolli",
+    "somente_F": true,
+    "limite_faltas": 10,
+    "logs_vpl_zip": "logs_vpl_PI.zip",
+    "turmas_dias": "turmas_dias_PI",
+    "turmas_sigaa_zip": "turmas_sigaa_PI.zip",
+    "turmas": [
+        {
+            "periodo": [
+                "2023/5/29",
+                "2023/8/12"
+            ],
+            "dias": [
+                "segunda",
+                "quarta"
+            ],
+            "horas": [
+                "10:00",
+                "08:00"
+            ],
+            "duracao": [
+                "2:00",
+                "2:00"
+            ],
+            "IPs": [
+                "172.17.11",
+                "172.17.11"
+            ],
+            "arquivo": "turmas_dias_PI/dias_TDA4BCM0505-22SA.csv"
+        },
+        {
+            "periodo": [
+                "2023/5/29",
+                "2023/8/12"
+            ],
+            "dias": [
+                "segunda",
+                "quarta"
+            ],
+            "horas": [
+                "08:00",
+                "10:00"
+            ],
+            "duracao": [
+                "2:00",
+                "2:00"
+            ],
+            "IPs": [
+                "172.17.11",
+                "172.17.11"
+            ],
+            "arquivo": "turmas_dias_PI/dias_TDB4BCM0505-22SA.csv"
+        }
+    ]
+}
