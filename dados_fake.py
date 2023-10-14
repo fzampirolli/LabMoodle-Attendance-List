@@ -28,11 +28,11 @@ arquivo_nomes = 'dados_fake.csv'
 df_nomes = pd.read_csv(arquivo_nomes)
 nomes = df_nomes['Nome'].tolist()
 
-# Listar todos os arquivos CSV na pasta "logs_vpl_PI"
-pasta_logs = 'logs_vpl_PI'
+# Listar todos os arquivos CSV na pasta "logs_PI"
+pasta_logs = 'logs_PI'
 arquivos_logs = [arq for arq in os.listdir(pasta_logs) if arq.endswith('.csv')]
 
-# Para cada arquivo CSV na pasta "logs_vpl_PI"
+# Para cada arquivo CSV na pasta "logs_PI"
 for arquivo_csv in arquivos_logs:
     caminho_arquivo_csv = os.path.join(pasta_logs, arquivo_csv)
 

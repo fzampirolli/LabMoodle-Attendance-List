@@ -17,8 +17,8 @@ git clone git@github.com:fzampirolli/LabMoodle-Attendance-List.git
 
 # 👇️ Configurar ambiente virtual 
 ```
-python -m venv venv
-source venv/bin/activate
+python -m venv ../venvLabMoodle
+source ../venvLabMoodle/bin/activate
 # pip freeze > requirements.txt
 pip install -r requirements.txt
 ```
