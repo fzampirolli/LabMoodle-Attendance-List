@@ -153,6 +153,9 @@ dataframes = []
 # Lista para armazenar nomes de arquivos processados
 arquivos_processados = []
 
+if not os.path.exists(dados["turmas_sigaa_zip"][:-4]+"_faltas"):
+    os.makedirs(dados["turmas_sigaa_zip"][:-4]+"_faltas")
+
 # Iterar por todos os arquivos no diretório
 for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]):
     if nome_arquivo.startswith("notas_") and nome_arquivo.endswith(".xls"):
@@ -176,7 +179,7 @@ for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]):
 
         # Salvar o DataFrame final em um arquivo CSV
         df.to_csv(
-            os.path.join(dados["turmas_sigaa_zip"][:-4], "faltas_" + nome_arquivo + ".csv"), index=False
+            os.path.join(dados["turmas_sigaa_zip"][:-4]+"_faltas", "faltas_" + nome_arquivo + ".csv"), index=False
         )
 
 lista_dias = []
@@ -187,13 +190,13 @@ for nome_arquivo in os.listdir(dados["turmas_dias"]):
 print(lista_dias)
 time.sleep(3)
 
-for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]): # para cada turma
+for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]+"_faltas"): # para cada turma
     if nome_arquivo.startswith("faltas_") and nome_arquivo.endswith(".csv"):
         for dia in lista_dias: # para cada dia de aula
             if dia in nome_arquivo:
                 print(dia)
                 caminho_dias = os.path.join(dados["turmas_dias"], "dias_"+dia+".csv")
-                caminho_turma = os.path.join(dados["turmas_sigaa_zip"][:-4], nome_arquivo)
+                caminho_turma = os.path.join(dados["turmas_sigaa_zip"][:-4]+"_faltas", nome_arquivo)
 
                 df_dias = pd.read_csv(caminho_dias)
                 df_faltas = pd.read_csv(caminho_turma)
@@ -223,10 +226,10 @@ for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]): # para cada turm
                 df_faltas.to_csv(caminho_turma, index=False) 
 
 # atribui "O" para os reprovados por falta
-for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]): # para cada turma
+for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]+"_faltas"): # para cada turma
     if nome_arquivo.startswith("faltas_") and nome_arquivo.endswith(".csv"):
 
-        caminho_turma = os.path.join(dados["turmas_sigaa_zip"][:-4], nome_arquivo)
+        caminho_turma = os.path.join(dados["turmas_sigaa_zip"][:-4]+"_faltas", nome_arquivo)
 
         df_faltas = pd.read_csv(caminho_turma)
 
