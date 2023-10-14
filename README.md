@@ -46,7 +46,7 @@ python main.py
 
 Os dados deste GitHub são fake e foram gerados a partir do código `dados_fake.py`.
 
-Na pasta `turmas_sigaa_PI` foram gerados arquivos `faltas_*`. 
+Na pasta `turmas_sigaa_PI_faltas` foram gerados arquivos `faltas_*`. 
 
 Foi incluído o número de faltas, conforme condições definidas em `dados.py`, nas chaves:
 
