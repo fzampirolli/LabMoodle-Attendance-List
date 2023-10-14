@@ -1,4 +1,4 @@
-#!/Users/fz/VSCode/LabVPL-Attendance-Checker/venv/bin/python
+#!/Users/fz/VSCode/LabMoodle-Attendance-List/venv/bin/python
 # -*- coding: utf-8 -*-
 import re
 import sys

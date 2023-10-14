@@ -1,9 +1,8 @@
+import pandas as pd
 import warnings
-
 warnings.filterwarnings("ignore", category=DeprecationWarning)
 import zipfile
 import os
-import pandas as pd
 import shutil
 import csv
 import time
@@ -95,18 +94,18 @@ for t in dados["turmas"]:
 
 
 ########################################################################
-# ler logs_vpl_PI.zip e gera logs_vpl_PI_combinado.csv
+# ler logs_PI.zip e gera logs_PI_combinado.csv
 ########################################################################
 
 # Extrai os arquivos do ZIP para o diretório de destino
-with zipfile.ZipFile(dados["logs_vpl_zip"], "r") as zip_ref:
+with zipfile.ZipFile(dados["logs_zip"], "r") as zip_ref:
     zip_ref.extractall("./")
 
 # Crie uma lista para armazenar todos os caminhos dos arquivos CSV
 arquivos_csv = []
 
 # Percorra todos os diretórios e subdiretórios em diretorio_destino
-for diretorio_raiz, diretorios, arquivos in os.walk(dados["logs_vpl_zip"][:-4]):
+for diretorio_raiz, diretorios, arquivos in os.walk(dados["logs_zip"][:-4]):
     for arquivo in arquivos:
         if arquivo.endswith(".csv"):
             caminho_completo = os.path.join(diretorio_raiz, arquivo)
@@ -127,9 +126,9 @@ df_combinado["Hora"] = pd.to_datetime(
 )
 
 # Remover uma pasta não vazia
-#shutil.rmtree(dados["logs_vpl_zip"][:-4])
+#shutil.rmtree(dados["logs_zip"][:-4])
 
-df_combinado.to_csv(dados["logs_vpl_zip"][:-4]+"_combinado.csv", index=False)
+df_combinado.to_csv(dados["logs_zip"][:-4]+"_combinado.csv", index=False)
 
 print(df_combinado.shape)
 
@@ -243,5 +242,5 @@ for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]+"_faltas"): # para
 
 '''
 limpar
-rm -rf *.csv *.json turmas_sigaa_PI turmas_dias_PI logs_vpl_PI
+rm -rf *.csv *.json turmas_sigaa_PI turmas_sigaa_PI_faltas turmas_dias_PI logs_PI
 '''

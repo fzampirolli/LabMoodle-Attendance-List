@@ -1,4 +1,4 @@
-# LabVPL-Attendance-Checker
+# LabMoodle-Attendance-List
 
 # Instalar python, pip e git (se ainda não tiver instalado)
 
@@ -10,9 +10,9 @@ python3 -m pip install --upgrade pip
 sudo apt install git-all
 ```
 
-# 👇️ Download LabVPL-Attendance-Checker 
+# 👇️ Download LabMoodle-Attendance-List 
 ```
-git clone git@github.com:fzampirolli/LabVPL-Attendance-Checker.git
+git clone git@github.com:fzampirolli/LabMoodle-Attendance-List.git
 ```
 
 # 👇️ Configurar ambiente virtual 
@@ -29,9 +29,9 @@ pip install -r requirements.txt
 
 Criar uma pasta `turmas_sigaa_*`, por exemplo `turmas_sigaa_PI` e incluir os arquivos `*.xls` exportados do SIGAA. Compactar essa pasta com o nome `turmas_sigaa_*.zip` e deixar na pasta deste projeto.
 
-## Logs do VPL
+## Logs do Moodle
 
-Criar uma pasta `logs_vpl_*`, por exemplo `logs_vpl_PI` e incluir os arquivos `*.csv` exportados do Moodle. Compactar essa pasta com o nome `logs_vpl_*.zip` e deixar na pasta deste projeto.
+Criar uma pasta `logs_*`, por exemplo `logs_PI` e incluir os arquivos `*.csv` exportados do Moodle. Compactar essa pasta com o nome `logs_*.zip` e deixar na pasta deste projeto.
 
 ## Configuração geral em `dados.py`
 

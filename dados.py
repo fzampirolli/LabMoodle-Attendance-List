@@ -10,7 +10,7 @@ dados = {
     "nome_a_remover": "Francisco de Assis Zampirolli",
     "somente_F": True, # reprovação por falta somente para quem tirou F e tem mais que limite_faltas
     "limite_faltas": 10,# math.ceil(0.25 * 48),
-    "logs_vpl_zip": f"logs_vpl_{sufixo}.zip",
+    "logs_zip": f"logs_{sufixo}.zip",
     "turmas_dias": f"turmas_dias_{sufixo}",
     "turmas_sigaa_zip": f"turmas_sigaa_{sufixo}.zip",
     "turmas": [

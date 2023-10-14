@@ -2,7 +2,7 @@
     "nome_a_remover": "Francisco de Assis Zampirolli",
     "somente_F": true,
     "limite_faltas": 10,
-    "logs_vpl_zip": "logs_vpl_PI.zip",
+    "logs_zip": "logs_PI.zip",
     "turmas_dias": "turmas_dias_PI",
     "turmas_sigaa_zip": "turmas_sigaa_PI.zip",
     "turmas": [

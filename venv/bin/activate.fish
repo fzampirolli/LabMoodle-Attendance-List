@@ -29,7 +29,7 @@ end
 # unset irrelevant variables
 deactivate nondestructive
 
-set -gx VIRTUAL_ENV "/Users/fz/VSCode/LabVPL-Attendance-Checker/venv"
+set -gx VIRTUAL_ENV "/Users/fz/VSCode/LabMoodle-Attendance-List/venv"
 
 set -gx _OLD_VIRTUAL_PATH $PATH
 set -gx PATH "$VIRTUAL_ENV/bin" $PATH
