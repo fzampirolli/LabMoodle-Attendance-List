@@ -1,10 +1,3 @@
-"""'
-python -m venv venv
-source venv/bin/activate
-# pip freeze > requirements.txt
-pip install -r requirements.txt
-python main.py
-"""
 import warnings
 
 warnings.filterwarnings("ignore", category=DeprecationWarning)
@@ -15,70 +8,40 @@ import shutil
 import csv
 import time
 from datetime import datetime, timedelta
+import json
+
+import subprocess
+
+# script a ser executado
+script_name = 'dados.py'
+
+# Execute o script
+try:
+    result = subprocess.run(['python', script_name], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+except subprocess.CalledProcessError as e:
+    print(f"Erro ao executar o script: {e}")
+
+# Nome do arquivo JSON que você deseja ler
+nome_arquivo_json = "dados.json"  # Substitua pelo nome do seu arquivo JSON
+
+# Abra o arquivo JSON para leitura
+with open(nome_arquivo_json, "r") as json_file:
+    dados = json.load(json_file)
 
 ########################################################################
-# ler logs_vpl.zip e gera logs_combinado.csv
+# Gerar dias de aulas com IPs dos labs
 ########################################################################
 
-logs_combinado = "logs_combinado.csv"
-nome_a_remover = "Francisco de Assis Zampirolli"
-
-caminho_zip = "logs_vpl.zip"
-diretorio_destino = "logs_vpl"
-
-# Extrai os arquivos do ZIP para o diretório de destino
-with zipfile.ZipFile(caminho_zip, "r") as zip_ref:
-    zip_ref.extractall(diretorio_destino)
-
-# Crie uma lista para armazenar todos os caminhos dos arquivos CSV
-arquivos_csv = []
-
-# Percorra todos os diretórios e subdiretórios em diretorio_destino
-for diretorio_raiz, diretorios, arquivos in os.walk(diretorio_destino):
-    for arquivo in arquivos:
-        if arquivo.endswith(".csv"):
-            caminho_completo = os.path.join(diretorio_raiz, arquivo)
-            arquivos_csv.append(caminho_completo)
-
-df_combinado = pd.DataFrame()
-for arquivo in arquivos_csv:
-    df = pd.read_csv(arquivo)
-    df_combinado = pd.concat([df_combinado, df], ignore_index=True)
-
-df_combinado = df_combinado[df_combinado["Nome completo"] != nome_a_remover]
-df_combinado.to_csv(logs_combinado, index=False)
-
-# Leia o arquivo CSV
-df_logs = pd.read_csv(logs_combinado)
-df_logs["Nome completo"] = df_logs[
-    "Nome completo"
-].str.upper()  # deixar nomes em maúsculo
-# Converter a coluna 'Hora' para o tipo DateTime
-df_logs["Hora"] = pd.to_datetime(
-    df_logs["Hora"], format="%d/%m/%Y %H:%M", dayfirst=True
-)
-
-# Remover uma pasta não vazia
-shutil.rmtree(diretorio_destino)
-
-print(df_logs.shape)
-
-
-########################################################################
-# Gera dias de aulas com IPs dos labs
-########################################################################
-diretorio_dias = 'turmas_dias'
-
-if not os.path.exists(diretorio_dias):
-    os.makedirs(diretorio_dias)
+if not os.path.exists(dados["turmas_dias"]):
+    os.makedirs(dados["turmas_dias"])
 
 def geraDiaHoraAulas(
-    periodo=["2023/5/29", "2023/8/31"],
-    dias=["segunda", "quarta"],
-    horas=["10:00", "08:00"],
-    duracao=["2:00", "2:00"],
-    IPs=["177.181.6", "177.181.7"],
-    arquivo="turmas_dias.csv",):
+    periodo,
+    dias,
+    horas,
+    duracao,
+    IPs,
+    arquivo):
 
     # Definir as datas de início (primeira segunda-feira de maio) e fim (última quarta-feira de agosto)
     aux = periodo[0].split("/")
@@ -121,42 +84,67 @@ def geraDiaHoraAulas(
 
             data_atual += timedelta(days=1)  # Avançar para o próximo dia
 
+for t in dados["turmas"]:
+    geraDiaHoraAulas(
+        t["periodo"],
+        t["dias"],
+        t["horas"],
+        t["duracao"],
+        t["IPs"],
+        t["arquivo"])
 
-# DA4BCM0505-22SA; segundas das 10:00 às 12:00;  quartas das 08:00 às 10:00 - L506
-geraDiaHoraAulas(
-    periodo=["2023/5/29", "2023/8/31"],
-    dias=["segunda", "quarta"],
-    horas=["10:00", "08:00"],
-    duracao=["2:00", "2:00"],
-    IPs=["172.17.11", "172.17.11"],
-    arquivo=os.path.join(diretorio_dias, "dias_DA4.csv"),
-)
-
-# DB4BCM0505-22SA; segundas das 08:00 às 10:00;  quartas das 10:00 às 10200 - L506
-geraDiaHoraAulas(
-    periodo=["2023/5/29", "2023/8/31"],
-    dias=["segunda", "quarta"],
-    horas=["08:00", "10:00"],
-    duracao=["2:00", "2:00"],
-    IPs=["172.17.11", "172.17.11"],
-    arquivo=os.path.join(diretorio_dias, "dias_DB4.csv"),
-)
 
 ########################################################################
-# ler turmas do SIGAA em turmas_sigaa/notas_*.xls
+# ler logs_vpl_PI.zip e gera logs_vpl_PI_combinado.csv
+########################################################################
+
+# Extrai os arquivos do ZIP para o diretório de destino
+with zipfile.ZipFile(dados["logs_vpl_zip"], "r") as zip_ref:
+    zip_ref.extractall(dados["logs_vpl_zip"][:-4])
+
+# Crie uma lista para armazenar todos os caminhos dos arquivos CSV
+arquivos_csv = []
+
+# Percorra todos os diretórios e subdiretórios em diretorio_destino
+for diretorio_raiz, diretorios, arquivos in os.walk(dados["logs_vpl_zip"][:-4]):
+    for arquivo in arquivos:
+        if arquivo.endswith(".csv"):
+            caminho_completo = os.path.join(diretorio_raiz, arquivo)
+            arquivos_csv.append(caminho_completo)
+
+df_combinado = pd.DataFrame()
+for arquivo in arquivos_csv:
+    df = pd.read_csv(arquivo)
+    df_combinado = pd.concat([df_combinado, df], ignore_index=True)
+
+df_combinado = df_combinado[df_combinado["Nome completo"] != dados["nome_a_remover"]]
+
+# Deixar nomes em maúsculo
+df_combinado["Nome completo"] = df_combinado["Nome completo"].str.upper()  
+# Converter a coluna 'Hora' para o tipo DateTime
+df_combinado["Hora"] = pd.to_datetime(
+    df_combinado["Hora"], format="%d/%m/%Y %H:%M", dayfirst=True
+)
+
+# Remover uma pasta não vazia
+shutil.rmtree(dados["logs_vpl_zip"][:-4])
+
+df_combinado.to_csv(dados["logs_vpl_zip"][:-4]+"_combinado.csv", index=False)
+
+print(df_combinado.shape)
+
+
+########################################################################
+# ler turmas do SIGAA em turmas_sigaa_PI/notas_*.xls
 ########################################################################
 
 # Prepara arquivos exportados do SIGAA, convertido para CSV
 
-# número de faltas totais da turma
-numero_faltas = 48
-
-# Diretório onde estão os arquivos "notas_*.xls"
-diretorio_turmas = "turmas_sigaa"
-caminho_zip = "turmas_sigaa.zip"
+# número de faltas iniciais
+numero_faltas = 0
 
 # Extrai os arquivos do ZIP para o diretório de destino
-with zipfile.ZipFile(caminho_zip, "r") as zip_ref:
+with zipfile.ZipFile(dados["turmas_sigaa_zip"], "r") as zip_ref:
     zip_ref.extractall("./")
 
 # Lista para armazenar DataFrames de cada arquivo
@@ -166,13 +154,9 @@ dataframes = []
 arquivos_processados = []
 
 # Iterar por todos os arquivos no diretório
-for nome_arquivo in os.listdir(diretorio_turmas):
+for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]):
     if nome_arquivo.startswith("notas_") and nome_arquivo.endswith(".xls"):
-        caminho_arquivo = os.path.join(diretorio_turmas, nome_arquivo)
-
-        #print(caminho_arquivo)
-        # Ler o arquivo CSV
-        # df = pd.read_csv(caminho_arquivo, sep=";", encoding='UTF-16')
+        caminho_arquivo = os.path.join(dados["turmas_sigaa_zip"][:-4], nome_arquivo)
 
         # Ler o arquivo Excel
         df = pd.read_excel(caminho_arquivo, sheet_name="Sheet0")
@@ -192,54 +176,69 @@ for nome_arquivo in os.listdir(diretorio_turmas):
 
         # Salvar o DataFrame final em um arquivo CSV
         df.to_csv(
-            os.path.join(diretorio_turmas, "faltas_" + nome_arquivo + ".csv"), index=False
+            os.path.join(dados["turmas_sigaa_zip"][:-4], "faltas_" + nome_arquivo + ".csv"), index=False
         )
 
 lista_dias = []
 # Iterar por todos os arquivos no diretório
-for nome_arquivo in os.listdir(diretorio_dias):
+for nome_arquivo in os.listdir(dados["turmas_dias"]):
     if nome_arquivo.startswith("dias_") and nome_arquivo.endswith(".csv"):
-        caminho_dias = os.path.join(diretorio_dias, nome_arquivo)
-        lista_dias.append(nome_arquivo[5:8])
+        lista_dias.append(nome_arquivo.split("_")[1][:-4])
 print(lista_dias)
-time.sleep(5)
+time.sleep(3)
 
-for nome_arquivo in os.listdir(diretorio_turmas): # para cada turma
+for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]): # para cada turma
     if nome_arquivo.startswith("faltas_") and nome_arquivo.endswith(".csv"):
-        for dia in lista_dias:
+        for dia in lista_dias: # para cada dia de aula
             if dia in nome_arquivo:
-                caminho_dias = os.path.join(diretorio_dias, "dias_"+dia+".csv")
-                caminho_turma = os.path.join(diretorio_turmas, nome_arquivo)
-                #print(caminho_dias)
-                #print(caminho_turma)
-                #print()
+                print(dia)
+                caminho_dias = os.path.join(dados["turmas_dias"], "dias_"+dia+".csv")
+                caminho_turma = os.path.join(dados["turmas_sigaa_zip"][:-4], nome_arquivo)
+
                 df_dias = pd.read_csv(caminho_dias)
                 df_faltas = pd.read_csv(caminho_turma)
 
                 for _, linha in df_faltas.iterrows(): # para cada aluno da turma
-                    #print(linha[1])
-                    df_filtro = df_logs.query("`Nome completo` == '"+linha[1]+ "'")
-                    if len(df_filtro): # aluno está no log
-                        for _, lin in df_dias.iterrows(): # para cada aula, verifica se o aluno esteve no lab
-                            dia_aula = lin[0]  # Primeiro elemento da linha é o dia e hora de início
-                            dia_aula_fim = lin[1]  # Segundo elemento da linha é o dia e hora de fim
-                            inicio = pd.to_datetime(dia_aula, format='%d/%m/%Y %H:%M')
-                            fim = pd.to_datetime(dia_aula_fim, format='%d/%m/%Y %H:%M')
-                            linhas_filtradas = df_filtro[(df_filtro['Hora'] >= inicio) & (df_filtro['Hora'] <= fim)]
-                            presente = False
-                            if len(linhas_filtradas):
-                                filtro = linhas_filtradas[linhas_filtradas['endereço IP'].str.contains(lin[2])]
-                                if len(filtro): # verifica IP do lab
-                                    print(f"{dia_aula} - {dia_aula_fim} {lin[2]} {len(filtro):3d} ações {dia} {linha[1]}")
-                                    presente = True 
-                            if presente:
-                                # Decrementar a coluna "Faltas" em 2 para o aluno presente
-                                df_faltas.loc[df_faltas['Nome'] == linha[1], 'Faltas'] -= 2
+                    print(linha[1],linha[3])
+                    if not dados["somente_F"] or linha[3] == "F":
+                        df_filtro = df_combinado.query("`Nome completo` == '"+linha[1]+ "'")
+                        if len(df_filtro): # aluno está no log
+                            for _, lin in df_dias.iterrows(): # para cada aula, verifica se o aluno esteve no lab
+                                dia_aula = lin[0]  # Primeiro elemento da linha é o dia e hora de início
+                                dia_aula_fim = lin[1]  # Segundo elemento da linha é o dia e hora de fim
+                                inicio = pd.to_datetime(dia_aula, format='%d/%m/%Y %H:%M')
+                                fim = pd.to_datetime(dia_aula_fim, format='%d/%m/%Y %H:%M')
+                                linhas_filtradas = df_filtro[(df_filtro['Hora'] >= inicio) & (df_filtro['Hora'] <= fim)]
+                                presente = False
+                                if len(linhas_filtradas):
+                                    filtro = linhas_filtradas[linhas_filtradas['endereço IP'].str.contains(lin[2])]
+                                    if len(filtro): # verifica IP do lab
+                                        print(f"{dia_aula} - {dia_aula_fim} {lin[2]} {len(filtro):3d} ações {dia} {linha[1]}")
+                                        presente = True 
+                                if not presente:
+                                    # Decrementar a coluna "Faltas" em 2 para o aluno presente
+                                    df_faltas.loc[df_faltas['Nome'] == linha[1], 'Faltas'] += 2
 
                 # Salvar o arquivo CSV modificado
                 df_faltas.to_csv(caminho_turma, index=False) 
 
+# atribui "O" para os reprovados por falta
+for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]): # para cada turma
+    if nome_arquivo.startswith("faltas_") and nome_arquivo.endswith(".csv"):
+
+        caminho_turma = os.path.join(dados["turmas_sigaa_zip"][:-4], nome_arquivo)
+
+        df_faltas = pd.read_csv(caminho_turma)
+
+        for _, linha in df_faltas.iterrows(): # para cada aluno da turma
+            print(linha[1],linha[3])
+            if not dados["somente_F"] or linha[3] == "F":
+                if linha[4] > dados["limite_faltas"]:
+                    df_faltas.loc[df_faltas['Nome'] == linha[1], 'Resultado'] = 'O'
+
+        df_faltas.to_csv(caminho_turma, index=False) 
+
 '''
 limpar
-rm -rf *.csv turmas_sigaa turmas_dias
+rm -rf *.csv *.json turmas_sigaa_PI turmas_dias_PI
 '''
