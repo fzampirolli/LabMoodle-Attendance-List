@@ -31,7 +31,12 @@ Criar uma pasta `turmas_sigaa_*`, por exemplo `turmas_sigaa_PI` e incluir os arq
 
 ## Logs do Moodle
 
-Criar uma pasta `logs_*`, por exemplo `logs_PI` e incluir os arquivos `*.csv` exportados do Moodle. Compactar essa pasta com o nome `logs_*.zip` e deixar na pasta deste projeto.
+Crie uma pasta chamada `logs_*`, por exemplo, `logs_PI`, e inclua os arquivos `*.csv` exportados do Moodle. Compacte essa pasta com o nome `logs_*.zip` e coloque-a na pasta deste projeto.
+
+Para evitar a geração de um log para cada atividade, como ilustrado na pasta `logs_PI`, é possível solicitar um log geral da disciplina. Geralmente, não é possível gerar um CSV com todas as informações da disciplina. No entanto, é possível aplicar alguns filtros: na engrenagem na página da disciplina -> mais... -> Logs.
+
+* Em `Todas as ações`, mude para `Todas as mudanças`.
+* Em `Todas as origens`, mude para `web`.
 
 ## Configuração geral em `dados.py`
 
