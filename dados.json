@@ -2,9 +2,9 @@
     "nome_a_remover": "Francisco de Assis Zampirolli",
     "somente_F": true,
     "limite_faltas": 10,
-    "logs": "logs_PI",
-    "turmas_dias": "turmas_dias_PI",
-    "turmas_sigaa": "turmas_sigaa_PI",
+    "logs": "logs_PI2024.1",
+    "turmas_dias": "turmas_dias_PI2024.1",
+    "turmas_sigaa": "turmas_sigaa_PI2024.1",
     "turmas": [
         {
             "periodo": [
@@ -27,7 +27,7 @@
                 "172.17.11",
                 "172.17.11"
             ],
-            "arquivo": "turmas_dias_PI/dias_TDA2BCM0505-22SA.csv"
+            "arquivo": "turmas_dias_PI2024.1/dias_TDA2BCM0505-22SA.csv"
         },
         {
             "periodo": [
@@ -50,7 +50,7 @@
                 "172.17.11",
                 "172.17.11"
             ],
-            "arquivo": "turmas_dias_PI/dias_TDB2BCM0505-22SA.csv"
+            "arquivo": "turmas_dias_PI2024.1/dias_TDB2BCM0505-22SA.csv"
         }
     ]
 }

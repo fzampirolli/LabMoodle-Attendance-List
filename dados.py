@@ -1,6 +1,6 @@
 import json, os, math
 
-sufixo = "PI"
+sufixo = "PI2024.1"
 
 # DA2BCM0505-22SA; terça das 08:00 às 10:00, semanal; quinta das 10:00 às 12:00, semanal - Lab. 405-2
 # DB2BCM0505-22SA; terça das 10:00 às 12:00, semanal; quinta das 08:00 às 10:00, semanal - Lab. 405-2
