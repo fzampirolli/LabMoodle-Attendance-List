@@ -52,7 +52,7 @@ def geraDiaHoraAulas(
     data_fim = datetime(aux[0], aux[1], aux[2])
 
     # Definir os horários para os dias de aula
-    dias_semana = ["segunda", "terca", "quarta", "quinta", "sexta"]
+    dias_semana = ["segunda", "terça", "quarta", "quinta", "sexta"]
     horarios = [datetime.strptime(hora, "%H:%M").time() for hora in horas]
     duracoes = [datetime.strptime(dur, "%H:%M").time() for dur in duracao]
 
@@ -239,8 +239,3 @@ for nome_arquivo in os.listdir(dados["turmas_sigaa"]+"_faltas"): # para cada tur
                     df_faltas.loc[df_faltas['Nome'] == linha[1], 'Resultado'] = 'O'
 
         df_faltas.to_csv(caminho_turma, index=False) 
-
-'''
-limpar
-rm -rf *.csv *.json turmas_sigaa_PI turmas_sigaa_PI_faltas turmas_dias_PI logs_PI
-'''
