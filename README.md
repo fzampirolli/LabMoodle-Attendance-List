@@ -27,11 +27,11 @@ pip install -r requirements.txt
 
 ## Turmas do SIGAA
 
-Criar uma pasta `turmas_sigaa_*`, por exemplo `turmas_sigaa_PI` e incluir os arquivos `*.xls` exportados do SIGAA. Compactar essa pasta com o nome `turmas_sigaa_*.zip` e deixar na pasta deste projeto.
+Criar uma pasta `turmas_sigaa_*`, por exemplo `turmas_sigaa_PI` e incluir os arquivos `*.xls` exportados do SIGAA e deixar na pasta deste projeto.
 
 ## Logs do Moodle
 
-Crie uma pasta chamada `logs_*`, por exemplo, `logs_PI`, e inclua os arquivos `*.csv` exportados do Moodle. Compacte essa pasta com o nome `logs_*.zip` e coloque-a na pasta deste projeto.
+Crie uma pasta chamada `logs_*`, por exemplo, `logs_PI`, e inclua os arquivos `*.csv` exportados do Moodle e coloque-a na pasta deste projeto.
 
 Para evitar a geração de um log para cada atividade, como ilustrado na pasta `logs_PI`, é possível solicitar um log geral da disciplina. Geralmente, não é possível gerar um CSV com todas as informações da disciplina. No entanto, é possível aplicar alguns filtros: na engrenagem na página da disciplina -> mais... -> Logs.
 
@@ -44,7 +44,7 @@ Configurar os dados gerais e das turmas no arquivo `dados.py`.
 
 # 👇️ Executar main.py
 ```
-python main.py
+python3 main.py
 ```
 
 # Verificar arquivos gerados

@@ -52,7 +52,7 @@ def geraDiaHoraAulas(
     data_fim = datetime(aux[0], aux[1], aux[2])
 
     # Definir os horários para os dias de aula
-    dias_semana = ["segunda", "terça", "quarta", "quinta", "sexta"]
+    dias_semana = ["segunda", "terca", "quarta", "quinta", "sexta"]
     horarios = [datetime.strptime(hora, "%H:%M").time() for hora in horas]
     duracoes = [datetime.strptime(dur, "%H:%M").time() for dur in duracao]
 
@@ -98,14 +98,14 @@ for t in dados["turmas"]:
 ########################################################################
 
 # Extrai os arquivos do ZIP para o diretório de destino
-with zipfile.ZipFile(dados["logs_zip"], "r") as zip_ref:
-    zip_ref.extractall("./")
+#with zipfile.ZipFile(dados["logs"], "r") as zip_ref:
+#    zip_ref.extractall("./")
 
 # Crie uma lista para armazenar todos os caminhos dos arquivos CSV
 arquivos_csv = []
 
 # Percorra todos os diretórios e subdiretórios em diretorio_destino
-for diretorio_raiz, diretorios, arquivos in os.walk(dados["logs_zip"][:-4]):
+for diretorio_raiz, diretorios, arquivos in os.walk(dados["logs"]):
     for arquivo in arquivos:
         if arquivo.endswith(".csv"):
             caminho_completo = os.path.join(diretorio_raiz, arquivo)
@@ -126,9 +126,9 @@ df_combinado["Hora"] = pd.to_datetime(
 )
 
 # Remover uma pasta não vazia
-#shutil.rmtree(dados["logs_zip"][:-4])
+#shutil.rmtree(dados["logs"])
 
-df_combinado.to_csv(dados["logs_zip"][:-4]+"_combinado.csv", index=False)
+df_combinado.to_csv(dados["logs"]+"_combinado.csv", index=False)
 
 print(df_combinado.shape)
 
@@ -143,8 +143,8 @@ print(df_combinado.shape)
 numero_faltas = 0
 
 # Extrai os arquivos do ZIP para o diretório de destino
-with zipfile.ZipFile(dados["turmas_sigaa_zip"], "r") as zip_ref:
-    zip_ref.extractall("./")
+# with zipfile.ZipFile(dados["turmas_sigaa"], "r") as zip_ref:
+#     zip_ref.extractall("./")
 
 # Lista para armazenar DataFrames de cada arquivo
 dataframes = []
@@ -152,13 +152,13 @@ dataframes = []
 # Lista para armazenar nomes de arquivos processados
 arquivos_processados = []
 
-if not os.path.exists(dados["turmas_sigaa_zip"][:-4]+"_faltas"):
-    os.makedirs(dados["turmas_sigaa_zip"][:-4]+"_faltas")
+if not os.path.exists(dados["turmas_sigaa"]+"_faltas"):
+    os.makedirs(dados["turmas_sigaa"]+"_faltas")
 
 # Iterar por todos os arquivos no diretório
-for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]):
+for nome_arquivo in os.listdir(dados["turmas_sigaa"]):
     if nome_arquivo.startswith("notas_") and nome_arquivo.endswith(".xls"):
-        caminho_arquivo = os.path.join(dados["turmas_sigaa_zip"][:-4], nome_arquivo)
+        caminho_arquivo = os.path.join(dados["turmas_sigaa"], nome_arquivo)
 
         # Ler o arquivo Excel
         df = pd.read_excel(caminho_arquivo, sheet_name="Sheet0")
@@ -178,24 +178,24 @@ for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]):
 
         # Salvar o DataFrame final em um arquivo CSV
         df.to_csv(
-            os.path.join(dados["turmas_sigaa_zip"][:-4]+"_faltas", "faltas_" + nome_arquivo + ".csv"), index=False
+            os.path.join(dados["turmas_sigaa"]+"_faltas", "faltas_" + nome_arquivo + ".csv"), index=False
         )
 
 lista_dias = []
 # Iterar por todos os arquivos no diretório
 for nome_arquivo in os.listdir(dados["turmas_dias"]):
     if nome_arquivo.startswith("dias_") and nome_arquivo.endswith(".csv"):
-        lista_dias.append(nome_arquivo.split("_")[1][:-4])
+        lista_dias.append(nome_arquivo.split("_")[1])
 print(lista_dias)
 time.sleep(3)
 
-for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]+"_faltas"): # para cada turma
+for nome_arquivo in os.listdir(dados["turmas_sigaa"]+"_faltas"): # para cada turma
     if nome_arquivo.startswith("faltas_") and nome_arquivo.endswith(".csv"):
         for dia in lista_dias: # para cada dia de aula
             if dia in nome_arquivo:
                 print(dia)
                 caminho_dias = os.path.join(dados["turmas_dias"], "dias_"+dia+".csv")
-                caminho_turma = os.path.join(dados["turmas_sigaa_zip"][:-4]+"_faltas", nome_arquivo)
+                caminho_turma = os.path.join(dados["turmas_sigaa"]+"_faltas", nome_arquivo)
 
                 df_dias = pd.read_csv(caminho_dias)
                 df_faltas = pd.read_csv(caminho_turma)
@@ -225,10 +225,10 @@ for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]+"_faltas"): # para
                 df_faltas.to_csv(caminho_turma, index=False) 
 
 # atribui "O" para os reprovados por falta
-for nome_arquivo in os.listdir(dados["turmas_sigaa_zip"][:-4]+"_faltas"): # para cada turma
+for nome_arquivo in os.listdir(dados["turmas_sigaa"]+"_faltas"): # para cada turma
     if nome_arquivo.startswith("faltas_") and nome_arquivo.endswith(".csv"):
 
-        caminho_turma = os.path.join(dados["turmas_sigaa_zip"][:-4]+"_faltas", nome_arquivo)
+        caminho_turma = os.path.join(dados["turmas_sigaa"]+"_faltas", nome_arquivo)
 
         df_faltas = pd.read_csv(caminho_turma)
 

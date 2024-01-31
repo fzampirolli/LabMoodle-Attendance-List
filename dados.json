@@ -2,41 +2,18 @@
     "nome_a_remover": "Francisco de Assis Zampirolli",
     "somente_F": true,
     "limite_faltas": 10,
-    "logs_zip": "logs_PI.zip",
+    "logs": "logs_PI",
     "turmas_dias": "turmas_dias_PI",
-    "turmas_sigaa_zip": "turmas_sigaa_PI.zip",
+    "turmas_sigaa": "turmas_sigaa_PI",
     "turmas": [
         {
             "periodo": [
-                "2023/5/29",
-                "2023/8/12"
+                "2023/2/5",
+                "2023/3/27"
             ],
             "dias": [
-                "segunda",
-                "quarta"
-            ],
-            "horas": [
-                "10:00",
-                "08:00"
-            ],
-            "duracao": [
-                "2:00",
-                "2:00"
-            ],
-            "IPs": [
-                "172.17.11",
-                "172.17.11"
-            ],
-            "arquivo": "turmas_dias_PI/dias_TDA4BCM0505-22SA.csv"
-        },
-        {
-            "periodo": [
-                "2023/5/29",
-                "2023/8/12"
-            ],
-            "dias": [
-                "segunda",
-                "quarta"
+                "terca",
+                "quinta"
             ],
             "horas": [
                 "08:00",
@@ -50,7 +27,30 @@
                 "172.17.11",
                 "172.17.11"
             ],
-            "arquivo": "turmas_dias_PI/dias_TDB4BCM0505-22SA.csv"
+            "arquivo": "turmas_dias_PI/dias_TDA2BCM0505-22SA.csv"
+        },
+        {
+            "periodo": [
+                "2023/2/5",
+                "2023/3/27"
+            ],
+            "dias": [
+                "terca",
+                "quinta"
+            ],
+            "horas": [
+                "10:00",
+                "08:00"
+            ],
+            "duracao": [
+                "2:00",
+                "2:00"
+            ],
+            "IPs": [
+                "172.17.11",
+                "172.17.11"
+            ],
+            "arquivo": "turmas_dias_PI/dias_TDB2BCM0505-22SA.csv"
         }
     ]
 }
