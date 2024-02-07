@@ -4,7 +4,7 @@ import json
 
 # Definir o quadrimestre
 SUFIXO = "PI2024.1"
-MAX_FALTAS = 48
+MAX_FALTAS = 46  # seria 48, porém a primeira aula de PI em 6/2/2024 teve erro nos IPs
 
 # Definir outras constantes
 LOGS_DIR = f"logs_{SUFIXO}"

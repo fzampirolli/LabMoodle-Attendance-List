@@ -40,7 +40,36 @@ Para evitar a geração de um log para cada atividade, como ilustrado na pasta `
 
 ## Configuração geral em `dados.py`
 
-Configurar os dados gerais e das turmas no arquivo `dados.py`.
+Configurar os dados gerais e das turmas no arquivo `dados.py`. Por exemplo, alterar:
+
+```
+# Definir o quadrimestre
+SUFIXO = "PI2024.1"
+MAX_FALTAS = 46  # seria 48, porém a primeira aula de PI em 6/2/2024 teve erro nos IPs
+
+```
+
+```
+# Alterar: Definir período letivo, dias de aula e duração
+periodo_letivo = ["2024/2/5", "2024/4/27"]
+dias_aula = ["terça", "quinta"]
+duracao_aula = ["2:00", "2:00"]
+IPs = "177.104.50"
+
+# Definição das turmas
+turmas = [
+    criar_turma(
+        # Alterar: Turma (SIGAA), hora da aula e prefixo dos IPs dos laboratórios
+        "TDA2BCM0505-22SA",
+        ["08:00", "10:00"],
+        [IPs, IPs],
+        periodo_letivo,
+        dias_aula,
+        duracao_aula,
+    ), ...
+```
+
+
 
 # 👇️ Executar main.py
 ```
