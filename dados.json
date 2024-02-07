@@ -1,7 +1,7 @@
 {
     "nome_a_remover": "",
     "somente_F": false,
-    "limite_faltas": 10,
+    "limite_faltas": 12,
     "logs": "logs_PI2024.1",
     "turmas_dias": "turmas_dias_PI2024.1",
     "turmas_sigaa": "turmas_sigaa_PI2024.1",
@@ -9,8 +9,8 @@
         {
             "nome": "TDA2BCM0505-22SA",
             "periodo": [
-                "2023/2/5",
-                "2023/3/27"
+                "2024/2/5",
+                "2024/4/27"
             ],
             "dias": [
                 "ter\u00e7a",
@@ -25,16 +25,16 @@
                 "2:00"
             ],
             "IPs": [
-                "172.17.11",
-                "172.17.11"
+                "177.104.50",
+                "177.104.50"
             ],
             "arquivo": "turmas_dias_PI2024.1/dias_TDA2BCM0505-22SA.csv"
         },
         {
             "nome": "TDB2BCM0505-22SA",
             "periodo": [
-                "2023/2/5",
-                "2023/3/27"
+                "2024/2/5",
+                "2024/4/27"
             ],
             "dias": [
                 "ter\u00e7a",
@@ -49,8 +49,8 @@
                 "2:00"
             ],
             "IPs": [
-                "172.17.11",
-                "172.17.11"
+                "177.104.50",
+                "177.104.50"
             ],
             "arquivo": "turmas_dias_PI2024.1/dias_TDB2BCM0505-22SA.csv"
         }

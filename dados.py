@@ -4,6 +4,7 @@ import json
 
 # Definir o quadrimestre
 SUFIXO = "PI2024.1"
+MAX_FALTAS = 48
 
 # Definir outras constantes
 LOGS_DIR = f"logs_{SUFIXO}"
@@ -23,9 +24,10 @@ def criar_turma(nome, horas, IPs, periodo, dias, duracao):
     }
 
 # Alterar: Definir período letivo, dias de aula e duração
-periodo_letivo = ["2023/2/5", "2023/3/27"]
+periodo_letivo = ["2024/2/5", "2024/4/27"]
 dias_aula = ["terça", "quinta"]
 duracao_aula = ["2:00", "2:00"]
+IPs = "177.104.50"
 
 # Definição das turmas
 turmas = [
@@ -33,7 +35,7 @@ turmas = [
         # Alterar: Turma (SIGAA), hora da aula e prefixo dos IPs dos laboratórios
         "TDA2BCM0505-22SA",
         ["08:00", "10:00"],
-        ["172.17.11", "172.17.11"],
+        [IPs, IPs],
         periodo_letivo,
         dias_aula,
         duracao_aula,
@@ -42,18 +44,19 @@ turmas = [
         # Alterar: Turma (SIGAA), hora da aula e prefixo dos IPs dos laboratórios
         "TDB2BCM0505-22SA",
         ["10:00", "08:00"],
-        ["172.17.11", "172.17.11"],
+        [IPs, IPs],
         periodo_letivo,
         dias_aula,
         duracao_aula,
     )
 ]
 
+import math
 # Dicionário de dados
 dados = {
     "nome_a_remover": "", # Francisco de Assis Zampirolli
     "somente_F": False,  # se True, reprovação por falta somente para quem tirou F e tem mais que limite_faltas
-    "limite_faltas": 10, # math.ceil(0.25 * 48),
+    "limite_faltas": math.ceil(0.25 * MAX_FALTAS),
     "logs": LOGS_DIR,
     "turmas_dias": TURMAS_DIAS_DIR,
     "turmas_sigaa": TURMAS_SIGAA_DIR,
